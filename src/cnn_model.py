@@ -16,7 +16,7 @@ class SimpleCNN(nn.Module):
         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2) #pooling to reduce dimensionality
 
         self.fc1 = nn.Linear(32 * 16 * 16, 128) # Fully connected layers # 64x64 → 16x16 after 2 poolings
-        self.dropout = nn.Dropout(0.3)
+        self.dropout = nn.Dropout(0.5)
         
         self.fc2 = nn.Linear(128, num_classes) #Output layer (K = num_classes)
 
