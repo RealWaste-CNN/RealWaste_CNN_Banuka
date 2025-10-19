@@ -14,7 +14,7 @@ print(f"Training on device: {device}")
 num_classes=9
 num_epochs=20
 batch_size=32
-learning_rate=0.001 #alpha in our notes
+learning_rate=0.01 #alpha in our notes
 
 #now I will load the dataset
 train_loader,val_loader,test_loader,classes=load_realwaste("data/RealWaste",batch_size=batch_size)
@@ -22,7 +22,9 @@ train_loader,val_loader,test_loader,classes=load_realwaste("data/RealWaste",batc
 #Initializing the model, loss function and tye optimizer
 model=SimpleCNN(num_classes=num_classes).to(device)
 criterian=nn.CrossEntropyLoss()
-optimizer=optim.Adam(model.parameters(),lr=learning_rate)
+optimizer = torch.optim.SGD(model.parameters(), learning_rate, momentum=0.9)
+
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)#change LR in epochs
 
 #training loop
 train_losses=[]
@@ -94,7 +96,7 @@ plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
 plt.title('Training and Validation Loss')
-plt.savefig('results/plots/loss_curve_2.png')
+plt.savefig('results/plots/loss_curve_3.png')
 plt.show()
 
 plt.figure(figsize=(10,5))
@@ -104,10 +106,10 @@ plt.xlabel('Epoch')
 plt.ylabel('Accuracy (%)')
 plt.legend()
 plt.title('Training and Validation Accuracy')
-plt.savefig('results/plots/accuracy_curve_2.png')
+plt.savefig('results/plots/accuracy_curve_3.png')
 plt.show()
 
 #saving the model
-torch.save(model.state_dict(), 'results/models/realwaste_cnn_2.pth')
-print("Model saved successfully at 'results/models/realwaste_cnn_2.pth'")
+torch.save(model.state_dict(), 'results/models/realwaste_cnn_best.pth')
+print("Model saved successfully at 'results/models/realwaste_cnn_best.pth'")
 

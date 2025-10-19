@@ -15,20 +15,23 @@ class SimpleCNN(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=3, padding=1) # 2nd Convolution with 32 filters
         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2) #pooling to reduce dimensionality
 
-        self.fc1 = nn.Linear(32 * 16 * 16, 128) # Fully connected layers # 64x64 → 16x16 after 2 poolings
+        self.conv3 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
+        self.pool3 = nn.MaxPool2d(kernel_size=2, stride=2) #pooling to reduce dimensionality
+
+        self.fc1 = nn.Linear(64 * 8 * 8, 128)
         self.dropout = nn.Dropout(0.5)
-        
-        self.fc2 = nn.Linear(128, num_classes) #Output layer (K = num_classes)
+        self.fc2 = nn.Linear(128, num_classes)
 
     def forward(self, x):
-        # Conv → ReLU → Pool
-        x = self.pool1(F.relu(self.conv1(x)))
-        # Conv → ReLU → Pool
-        x = self.pool2(F.relu(self.conv2(x)))
-        # Flatten
-        x = x.view(x.size(0), -1)
-        # FC + Dropout + ReLU
+        x = self.pool1(F.relu(self.conv1(x)))   # [B,16,32,32]
+        x = self.pool2(F.relu(self.conv2(x)))   # [B,32,16,16]
+        x = self.pool3(F.relu(self.conv3(x)))   # [B,64,8,8]
+
+        #Flatten + FC
+        x = x.view(x.size(0), -1)               
         x = self.dropout(F.relu(self.fc1(x)))
-        # Output 
-        x = self.fc2(x)
-        return x
+        x = self.fc2(x)                         
+if __name__ == "__main__":
+    model = SimpleCNN(num_classes=9)
+    sample = torch.randn(4, 3, 64, 64)
+    out = model(sample)
