@@ -30,7 +30,8 @@ class SimpleCNN(nn.Module):
         #Flatten + FC
         x = x.view(x.size(0), -1)               
         x = self.dropout(F.relu(self.fc1(x)))
-        x = self.fc2(x)                         
+        x = self.fc2(x)      
+        return x                   
 if __name__ == "__main__":
     model = SimpleCNN(num_classes=9)
     sample = torch.randn(4, 3, 64, 64)
