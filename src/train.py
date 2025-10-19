@@ -96,7 +96,7 @@ plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
 plt.title('Training and Validation Loss')
-plt.savefig('results/plots/loss_curve_3.png')
+plt.savefig('results/plots/loss_curve_4.png')
 plt.show()
 
 plt.figure(figsize=(10,5))
@@ -106,10 +106,10 @@ plt.xlabel('Epoch')
 plt.ylabel('Accuracy (%)')
 plt.legend()
 plt.title('Training and Validation Accuracy')
-plt.savefig('results/plots/accuracy_curve_3.png')
+plt.savefig('results/plots/accuracy_curve_4.png')
 plt.show()
 
 #saving the model
-torch.save(model.state_dict(), 'results/models/realwaste_cnn_best.pth')
-print("Model saved successfully at 'results/models/realwaste_cnn_best.pth'")
+torch.save(model.state_dict(), 'results/models/realwaste_cnn_best_2.pth')
+print("Model saved successfully at 'results/models/realwaste_cnn_best_2.pth'")
 
