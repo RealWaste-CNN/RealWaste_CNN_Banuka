@@ -8,6 +8,7 @@ def load_realwaste(data_dir="data/RealWaste", batch_size=32, image_size=(64, 64)
     Expects directory structure:
         data/realwaste/class_name/image.jpg
     """
+    
 
     # Image preprocessing (resize, convert to tensor, normalize)
     # Data augmentation for training
