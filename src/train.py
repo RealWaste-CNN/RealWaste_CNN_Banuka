@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from dataset_loader import load_realwaste
 from cnn_model import SimpleCNN
 
+
 #device configuration
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Training on device: {device}")
@@ -14,7 +15,7 @@ print(f"Training on device: {device}")
 num_classes=9
 num_epochs=20
 batch_size=32
-learning_rate=0.01 #alpha in our notes
+learning_rate=0.002 #alpha in our notes
 
 #now I will load the dataset
 train_loader,val_loader,test_loader,classes=load_realwaste("data/RealWaste",batch_size=batch_size)
@@ -22,7 +23,8 @@ train_loader,val_loader,test_loader,classes=load_realwaste("data/RealWaste",batc
 #Initializing the model, loss function and tye optimizer
 model=SimpleCNN(num_classes=num_classes).to(device)
 criterian=nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), learning_rate, momentum=0.9)
+
+optimizer = torch.optim.Adam(model.parameters(), learning_rate)
 
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)#change LR in epochs
 
