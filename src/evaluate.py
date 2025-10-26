@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from dataset_loader import load_realwaste
 from cnn_model import SimpleCNN
+from datetime import datetime
+import os
 
 #Identifying the device type
 device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -39,8 +41,20 @@ print(f"Accuracy is:{test_accuracy:.2f}%")
 
 
 #classification metrics
+os.makedirs("report", exist_ok=True)
 print("\n Classification matircs are as below")
-print(classification_report(all_labels,all_preds,target_names=classes,digits=3))
+report=classification_report(all_labels,all_preds,target_names=classes,digits=3)
+print("\n--- Classification Report ---")
+print(report)
+#saving the metrics in results folder
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+report_path = f"reports/classification_report_{timestamp}.txt"
+with open(report_path, "w") as f:
+    f.write(f"Test Accuracy: {test_accuracy:.2f}%\n\n")
+    f.write("--- Classification Report ---\n")
+    f.write(report)
+
+print(f"\n Classification report saved to {report_path}")
 
 #confusion matrix
 cm=confusion_matrix(all_labels,all_preds)
