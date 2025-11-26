@@ -29,7 +29,7 @@
 ---
 
 ## 📌 Overview
-
+Done by Banuka Liyanage(220362G).
 **RealWaste CNN** is a deep-learning project for **classifying real-world waste images** into predefined categories (e.g., plastics, metal, paper, etc.).  
 It is designed as an **experimental baseline** and teaching/benchmarking resource for:
 
